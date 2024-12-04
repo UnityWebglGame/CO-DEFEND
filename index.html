@@ -50,15 +50,15 @@
 
     // @formatter:off
     var buildUrl = "Build";
-    var loaderUrl = buildUrl + "/CO-DEFEND.loader.js?id=0.0.7";
+    var loaderUrl = buildUrl + "/CO-DEFEND.loader.js?id=0.0.8";
     var config = {
-        dataUrl: buildUrl + "/CO-DEFEND.data.unityweb?id=0.0.7",
-        frameworkUrl: buildUrl + "/CO-DEFEND.framework.js.unityweb?id=0.0.7",
-        codeUrl: buildUrl + "/CO-DEFEND.wasm.unityweb?id=0.0.7",
+        dataUrl: buildUrl + "/CO-DEFEND.data.unityweb?id=0.0.8",
+        frameworkUrl: buildUrl + "/CO-DEFEND.framework.js.unityweb?id=0.0.8",
+        codeUrl: buildUrl + "/CO-DEFEND.wasm.unityweb?id=0.0.8",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Penpeer",
         productName: "Moderna_CO-DEFFEND",
-        productVersion: "0.0.7",
+        productVersion: "0.0.8",
         showBanner: unityShowBanner,
     };
     // @formatter:on
@@ -73,10 +73,13 @@
         canvas.style.width = "100%";
         canvas.style.height = "100%";
         container.style.backgroundColor = '#B1E0F4';
+        adjustCanvasSizeMobile();
+        window.onresize = () => adjustCanvasSizeMobile();
+    } else {
+        adjustCanvasSize();
+        window.onresize = () => adjustCanvasSize();
     }
 
-    adjustCanvasSize(isMobile);
-    window.onresize = () => adjustCanvasSize(isMobile);
 
     // @formatter:off
     // @formatter:on
@@ -96,28 +99,67 @@
     };
     document.body.appendChild(script);
 
-    function adjustCanvasSize(isMobile) {
-       var viewportWidth = window.visualViewport.width;
+    function adjustCanvasSizeMobile() {
+        var viewportWidth = window.visualViewport.width;
         var viewportHeight = window.visualViewport.height;
 
-        if (isMobile || (viewportWidth < 1334 || viewportHeight < 750)) {
-            var shortestSide = Math.min(viewportWidth, viewportHeight);
-            var canvasWidth = shortestSide;
-            var canvasHeight = (shortestSide / 9) * 16;
+        var shortestSide = Math.min(viewportWidth, viewportHeight);
+        var canvasWidth = shortestSide;
+        var canvasHeight = (shortestSide / 9) * 16;
 
-            if (viewportWidth < viewportHeight) {
-                // Portrait mode
+        if (viewportWidth < viewportHeight) {
+            // Portrait mode
+            var aspectRatio = viewportHeight / viewportWidth;
+            if (aspectRatio > 16 / 9) {
+                // Taller than 16:9
                 canvas.style.width = canvasWidth + "px";
                 canvas.style.height = canvasHeight + "px";
             } else {
-                // Landscape mode
+                // Wider than 16:9
                 canvas.style.width = canvasHeight + "px";
                 canvas.style.height = canvasWidth + "px";
             }
+        } else {
+            // Landscape mode
+            var aspectRatio = viewportWidth / viewportHeight;
+            if (aspectRatio > 16 / 9) {
+                // Wider than 16:9
+                canvas.style.width = canvasHeight + "px";
+                canvas.style.height = canvasWidth + "px";
+            } else {
+                // Taller than 16:9
+                canvas.style.width = canvasWidth + "px";
+                canvas.style.height = canvasHeight + "px";
+            }
+        }
+    }
+
+    function adjustCanvasSize(isMobile) {
+        var viewportWidth = window.visualViewport.width;
+        var viewportHeight = window.visualViewport.height;
+
+        if (viewportWidth < 1334 || viewportHeight < 750) {
+            var aspectRatio = 16 / 9;
+            var canvasWidth, canvasHeight;
+
+            if (viewportWidth / viewportHeight > aspectRatio) {
+                // Wider than 16:9
+                canvasHeight = viewportHeight;
+                canvasWidth = canvasHeight * aspectRatio;
+            } else {
+                // Taller than 16:9
+                canvasWidth = viewportWidth;
+                canvasHeight = canvasWidth / aspectRatio;
+            }
+
+            canvas.style.width = canvasWidth + "px";
+            canvas.style.height = canvasHeight + "px";
+
         } else if (!isMobile) {
             canvas.style.width = "1334px";
             canvas.style.height = "750px";
-        } 
+        }
+        canvas.style.objectFit = "contain";
     }
 
 </script>
