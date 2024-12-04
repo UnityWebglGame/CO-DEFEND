@@ -100,8 +100,9 @@
     document.body.appendChild(script);
 
     function adjustCanvasSizeMobile() {
-        var viewportWidth = window.visualViewport.width;
-        var viewportHeight = window.visualViewport.height;
+        var viewportWidth = window.innerWidth;
+        var viewportHeight = window.innerHeight;
+
 
         var shortestSide = Math.min(viewportWidth, viewportHeight);
         var canvasWidth = shortestSide;
