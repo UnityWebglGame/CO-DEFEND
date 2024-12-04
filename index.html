@@ -110,28 +110,12 @@
 
         if (viewportWidth < viewportHeight) {
             // Portrait mode
-            var aspectRatio = viewportHeight / viewportWidth;
-            if (aspectRatio > 16 / 9) {
-                // Taller than 16:9
-                canvas.style.width = canvasWidth + "px";
-                canvas.style.height = canvasHeight + "px";
-            } else {
-                // Wider than 16:9
-                canvas.style.width = canvasHeight + "px";
-                canvas.style.height = canvasWidth + "px";
-            }
+            canvas.style.width = canvasWidth + "px";
+            canvas.style.height = canvasHeight + "px";
         } else {
             // Landscape mode
-            var aspectRatio = viewportWidth / viewportHeight;
-            if (aspectRatio > 16 / 9) {
-                // Wider than 16:9
-                canvas.style.width = canvasHeight + "px";
-                canvas.style.height = canvasWidth + "px";
-            } else {
-                // Taller than 16:9
-                canvas.style.width = canvasWidth + "px";
-                canvas.style.height = canvasHeight + "px";
-            }
+            canvas.style.width = canvasHeight + "px";
+            canvas.style.height = canvasWidth + "px";
         }
     }
 
