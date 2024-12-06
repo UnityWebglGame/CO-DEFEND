@@ -113,13 +113,12 @@
             // Portrait mode
             canvas.style.width = canvasWidth + "px";
             canvas.style.height = canvasHeight + "px";
-            toast.style.transform = 'rotate(90deg)';
-            toast.style.left = '20%';
+            toast.style.transform = 'translate(-50%, -50%) rotate(90deg)';
         } else {
             // Landscape mode
             canvas.style.width = canvasHeight + "px";
             canvas.style.height = canvasWidth + "px";
-            toast.style.left = '50%';
+            toast.style.transform = 'translate(-50%, -50%)';
         }
     }
 
