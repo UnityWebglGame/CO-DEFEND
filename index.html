@@ -108,19 +108,22 @@
         var shortestSide = Math.min(viewportWidth, viewportHeight);
         var canvasWidth = shortestSide;
         var canvasHeight = (shortestSide / 9) * 16;
-
+        var toast = document.getElementById('toast');
         if (viewportWidth < viewportHeight) {
             // Portrait mode
             canvas.style.width = canvasWidth + "px";
             canvas.style.height = canvasHeight + "px";
+            toast.style.transform = 'rotate(90deg)';
+            toast.style.left = '20%';
         } else {
             // Landscape mode
             canvas.style.width = canvasHeight + "px";
             canvas.style.height = canvasWidth + "px";
+            toast.style.left = '50%';
         }
     }
 
-    function adjustCanvasSize(isMobile) {
+    function adjustCanvasSize() {
         var viewportWidth = window.visualViewport.width;
         var viewportHeight = window.visualViewport.height;
 
